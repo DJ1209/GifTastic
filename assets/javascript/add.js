@@ -9,7 +9,7 @@ $(document).ready(function() {
         for (var i = 0; i < topics.length; i++) {
             //create all buttons
             var a = $('<button>');
-            a.addClass('expression');
+            a.addClass('expression btn btn-secondary');
             a.attr('data-name', topics[i]);
             a.text(topics[i]);
             $('#buttonsView').append(a);
@@ -35,22 +35,46 @@ $(document).ready(function() {
                     $('#expressView').empty();
                     //loops through the data
                     for (var j = 0; j < results.length; j++) {
-                        var imageDiv = $('<div>');
                         var imageView = results[j].images.fixed_height.url;
                         var still = results[j].images.fixed_height_still.url;
                         // console.log(imageView);  
-                        var expressImage = $('<img>').attr("src", still).attr('data-animate', imageView).attr('data-still', still);
+
+                        var expressImage = $('<img>').attr("src", still).attr('data-animate', imageView).attr('data-still', still).attr('class', 'card-img-top');
                         expressImage.attr('data-state', 'still');
-                        $('#expressView').prepend(expressImage);
+                        // $('#expressView').append(expressImage);
                         expressImage.on('click', playGif);
 
-                        // pulling the rating
                         var rating = results[j].rating;
+
+                        let imgCard = `
+                        <div class="col-md-4 col-xs-6">
+                            <div class="card` + j + `" style="width: 18rem;">` +
+                            `<div class="card-body">
+                                    <h5 class="card-title"> Rating: ` + rating + `</h5>                            
+                                </div>
+                            </div>
+                        </div>`;
+
+
+
+
+
+                        $('#expressView').append(imgCard);
+                        $('.card' + j).prepend(expressImage);
+
+                        // pulling the rating
+
                         // console.log(rating);
-                        var displayRated = $('<p>').text("Rating: " + rating);
-                        $('#expressView').prepend(displayRated);
+                        // var displayRated = $('<p>').text("Rating: " + rating);
+                        // $('#expressView').prepend(displayRated);
 
                     } //for loop
+
+
+
+
+
+
                 }); // done response
 
             function playGif() {
